@@ -1,11 +1,11 @@
 import cv2
 import mediapipe as mp
 
-mp_face_mesh = mp.solutions.face_mesh # Detecting 468 points facials basing in mediapipe
-face_mesh = mp_face_mesh.FaceMesh(refine_landmarks=True) # More precision into eyes, lips and eyebrowns
-mp_drawing = mp.solutions.drawing_utils # Help to draw facials points into the image
+mp_face_mesh = mp.solutions.face_mesh
+face_mesh = mp_face_mesh.FaceMesh(refine_landmarks=True)
+mp_drawing = mp.solutions.drawing_utils
 
-# Key points of the mouth based of the models of mediapipe
+# Puntos clave adicionales
 MOUTH_LEFT = 61
 MOUTH_RIGHT = 291
 MOUTH_TOP = 0
@@ -15,13 +15,6 @@ LEFT_EYE_BOTTOM = 145
 RIGHT_EYE_TOP = 386
 RIGHT_EYE_BOTTOM = 374
 
-
-"""
-mouth_width: Horizontal distance between the extremes of the mouth
-mouth_height: Vertical distance between the top and bottom part of the mouth
-mouth_ratio: Relationship between the height and width of the mouth.
-
-"""
 def calcular_proporciones(landmarks, width, height):
     mouth_left = (int(landmarks[MOUTH_LEFT].x * width), int(landmarks[MOUTH_LEFT].y * height))
     mouth_right = (int(landmarks[MOUTH_RIGHT].x * width), int(landmarks[MOUTH_RIGHT].y * height))
@@ -45,12 +38,6 @@ def calcular_proporciones(landmarks, width, height):
         "left_eye_height": left_eye_height,
         "right_eye_height": right_eye_height,
     }
-    """
-    if mouth_ratio < 0.27:
-        return "Happy"
-    else:
-        return "Poker Face"
-    """
 
 def detectar_emocion(landmarks, width, height):
     props = calcular_proporciones(landmarks, width, height)
@@ -68,10 +55,8 @@ def detectar_emocion(landmarks, width, height):
     else:
         return "Neutral"
 
-# Code for detecting the camera of the laptop 
 cap = cv2.VideoCapture(0)
 
-# Processing of each frame
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -80,8 +65,6 @@ while cap.isOpened():
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = face_mesh.process(rgb_frame)
     
-
-    # If detect all the facion points, drawing it.
     if results.multi_face_landmarks:
         for face_landmarks in results.multi_face_landmarks:
             mp_drawing.draw_landmarks(
@@ -110,7 +93,5 @@ while cap.isOpened():
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Free memory and close the windows
 cap.release()
 cv2.destroyAllWindows()
-
