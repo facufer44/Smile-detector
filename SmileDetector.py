@@ -27,7 +27,7 @@ def detectar_emocion(landmarks, width, height):
     else:
         return "Poker Face"
 
-# Code for detect the camera with "0"
+# Code for detect the camera with
 cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
