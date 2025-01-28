@@ -22,7 +22,7 @@ def detectar_emocion(landmarks, width, height):
     mouth_ratio = mouth_height / mouth_width  
     print(mouth_width, mouth_height, mouth_ratio)
     
-    if mouth_ratio < 0.27: # umbral ajustablre
+    if mouth_ratio < 0.27:
         return "Happy"
     else:
         return "Poker Face"
