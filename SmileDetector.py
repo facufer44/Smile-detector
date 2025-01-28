@@ -27,7 +27,7 @@ def detectar_emocion(landmarks, width, height):
     else:
         return "Poker Face"
 
-# Code for detect the camera with
+# Code for detecting the camera of the laptop 
 cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
@@ -65,7 +65,7 @@ while cap.isOpened():
     cv2.imshow("Deteccion de emociones", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
+# Free memory
 cap.release()
 cv2.destroyAllWindows()
 
