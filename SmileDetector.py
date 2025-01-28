@@ -23,11 +23,11 @@ def detectar_emocion(landmarks, width, height):
     print(mouth_width, mouth_height, mouth_ratio)
     
     if mouth_ratio < 0.27: # umbral ajustablre
-        return "Feliz"
+        return "Happy"
     else:
         return "Poker Face"
 
-
+# Code for detect the camera with "0"
 cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
